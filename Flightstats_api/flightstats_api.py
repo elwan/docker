@@ -22,7 +22,9 @@ class FlightList(Resource):
         enddate = request.args.get("enddate") # get date passing in args
         data = [] #initialise list of data
         """Return list of flights"""
-        paxquery = {"created_at" : {"$gte":debutdate+"T00:00:00", "$lte":enddate+"T00:00:00"}} #query list flights filtered by date
+        #paxquery = {"created_at" : {"$gte":debutdate+"T00:00:00", "$lte":enddate+"T00:00:00"}} #query list flights filtered by date
+        paxquery = {"flight_date" : {"$gte":debutdate+"T00:00:00", "$lte":enddate+"T00:00:00"}} #query list flights filtered by date
+
         cursor = mydoc.find(paxquery) #get query in mongodb database
         for flight in cursor:
             data.append(self.get_flightdata(flight)) #append each  flights in list
@@ -68,4 +70,4 @@ class FlightList(Resource):
         return cedeaopax
 
 if __name__ == '__main__' :
-    app.run(debug=True,host= '0.0.0.0',port = 5050)
+    app.run(debug=True,host= '0.0.0.0',port = 5080)
